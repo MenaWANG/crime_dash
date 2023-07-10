@@ -27,6 +27,7 @@ df2 = df2.drop_duplicates()
 
 # Create the Dash app
 app = dash.Dash(__name__)
+server = app.server
 
 # Define the layout of the Dash app
 app.layout = html.Div([
