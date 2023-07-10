@@ -39,18 +39,20 @@ app.layout = html.Div([
         href='styles/custom.css'  # Specify the path to your CSS file
     ),
     html.Div([
-        html.H1("Incident Rates Over Years by LGA"),
+        html.H1("Incident Rates over Years by LGA"),
         dcc.Dropdown(
+            className="custom-dropdown-1",
             id='lga-dropdown',
             options=[{'label': lga, 'value': lga} for lga in df['LGA'].unique() if lga != "Total"],
             value=df['LGA'].unique()[0:1],
-            multi=True
+            multi=True,
         ),
         dcc.Graph(id='lga-incident-graph')
     ]),
     html.Div([
-        html.H1("Incident Rates Over Years by Offence Division"),
+        html.H1("Incident Rates over Years by Offence Division"),
         dcc.Dropdown(
+            className = "custom-dropdown-2",
             id='offence-division-dropdown',
             options=[{'label': offence, 'value': offence} for offence in df2['Offence_Division'].unique()],
             value = df2['Offence_Division'].unique()[0],
@@ -69,7 +71,9 @@ def update_graph(selected_lga):
     fig = px.line(filtered_df, x='Year', y='Incidents_Rate', color='LGA')
     fig.update_layout(
         yaxis_title = "Rate per 100K population",
-        plot_bgcolor = "lightgray"
+        template = "plotly_dark",
+        xaxis_title = "",
+        margin = dict(b=0)
         )
     return fig
 
@@ -84,7 +88,9 @@ def update_graph(selected_lga, selected_division):
     fig = px.line(filtered_df, x='Year', y='Division_Incidents_Rate', color='LGA')
     fig.update_layout(
         yaxis_title = "Rate per 100K population",
-        plot_bgcolor = "lightblue"
+        template = "plotly_dark",
+        xaxis_title = "",
+        margin = dict(b=0)
         )
     return fig
 
