@@ -41,7 +41,7 @@ app.layout = html.Div([
     html.Div([
         html.H1("Incident Rates over Years by LGA"),
         dcc.Dropdown(
-            className="custom-dropdown-1",
+            className="my-dropdown",
             id='lga-dropdown',
             options=[{'label': lga, 'value': lga} for lga in df['LGA'].unique() if lga != "Total"],
             value=df['LGA'].unique()[0:1],
@@ -52,7 +52,7 @@ app.layout = html.Div([
     html.Div([
         html.H1("Incident Rates over Years by Offence Division"),
         dcc.Dropdown(
-            className = "custom-dropdown-2",
+            className = "my-dropdown",
             id='offence-division-dropdown',
             options=[{'label': offence, 'value': offence} for offence in df2['Offence_Division'].unique()],
             value = df2['Offence_Division'].unique()[0],

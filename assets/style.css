@@ -1,13 +1,25 @@
-.custom-dropdown-1 .Select-value {
-    color: black;
-    font-weight: bold;
-    background-color: #FCE22A;
-    border-color: #080808c5;
+.my-dropdown {
+    background-color: black;
+    border: 1px solid black;
+    border-color: black;
+    padding: 5px;
 }
-.custom-dropdown-2 > .Select-control {
+.my-dropdown  .Select-control {
     width:100% !important;
-    border: 2px solid black;
     border-radius:20px;
-    background-color:#FCE22A;
-    font-weight: bold;
+    border-color: yellow;
+    background-color:yellow;
+    font-weight: bold;   
+}
+.my-dropdown .Select-value{
+    background-color: yellow;
+    border-color: black;
+    color: black;
+}
+.my-dropdown .VirtualizedSelectFocusedOption {
+    background-color: lightyellow;
+    color: black;
+}
+.my-dropdown .VirtualizedSelectOption  {
+    color: rgb(62, 60, 60)
 }
