@@ -36,7 +36,7 @@ app.layout = html.Div([
     ),
     html.Link(
         rel='stylesheet',
-        href='styles/custom.css'  # Specify the path to your CSS file
+        href='assets/style.css'  # Specify the path to your CSS file
     ),
     html.Div([
         html.H1("Incident Rates over Years by LGA"),

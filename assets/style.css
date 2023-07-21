@@ -7,19 +7,18 @@
 .my-dropdown  .Select-control {
     width:100% !important;
     border-radius:20px;
-    border-color: yellow;
     background-color:yellow;
+    border-color: yellow;
     font-weight: bold;   
 }
 .my-dropdown .Select-value{
     background-color: yellow;
-    border-color: black;
     color: black;
+}
+.my-dropdown .VirtualizedSelectOption  {
+    color: rgb(60, 60, 60)
 }
 .my-dropdown .VirtualizedSelectFocusedOption {
     background-color: lightyellow;
     color: black;
-}
-.my-dropdown .VirtualizedSelectOption  {
-    color: rgb(62, 60, 60)
 }
