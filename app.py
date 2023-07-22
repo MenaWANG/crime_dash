@@ -9,7 +9,7 @@ data_path = 'data/Data_Tables_LGA_Criminal_Incidents_Year_Ending_March_2023.xlsx
 df = pd.read_excel(data_path, sheet_name = 'Table 01')
 df['LGA'] = df['Local Government Area']
 df['LGA'] = df['LGA'].str.strip()
-df['Incidents_Rate'] = round(df['Rate per 100,000 population'],2)
+df['Incidents_Rate'] = round(df['Rate per 100,000 population'])
 wanted_fields = ['Year', 'LGA', 'Incidents_Rate']
 df = df[wanted_fields]
 df = df.drop_duplicates()
@@ -40,7 +40,7 @@ app.layout = html.Div([
         href='styles/custom.css'  # Specify the path to your CSS file
     ),
     html.Div([
-        html.H1("Incident Rates over Years by LGA"),
+        html.H1("Incident Rates by LGA (all offence)"),
         dcc.Dropdown(
             className="my-dropdown",
             id='lga-dropdown',
@@ -51,7 +51,7 @@ app.layout = html.Div([
         dcc.Graph(id='lga-incident-graph')
     ]),
     html.Div([
-        html.H1("Incident Rates over Years by Offence Division"),
+        html.H1("Incident Rates by LGA (offence division breakdown)"),
         dcc.Dropdown(
             className = "my-dropdown",
             id='offence-division-dropdown',
