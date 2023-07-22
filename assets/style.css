@@ -1,13 +1,44 @@
-.custom-dropdown-1 .Select-value {
-    color: black;
-    font-weight: bold;
-    background-color: #FCE22A;
-    border-color: #080808c5;
+/* General styling for the dropdown component */
+.my-dropdown {
+    background-color: #ffffff; /* Light gray background */
+    border: 1px solid #d0d0d0; /* Light gray border */
+    padding: 5px;
+    border-radius: 10px; /* Rounded corners */
 }
-.custom-dropdown-2 > .Select-control {
-    width:100% !important;
-    border: 2px solid black;
-    border-radius:20px;
-    background-color:#FCE22A;
-    font-weight: bold;
+
+/* Styling for the dropdown options */
+.my-dropdown .Select-control {
+    width: 100% !important;
+    border-radius: 10px; /* Rounded corners */
+    background-color: #ffffff; /* White background */
+    border-color: #d0d0d0; /* Light gray border */
+    font-weight: bold;   
+}
+
+/* Styling for the selected value in the dropdown */
+.my-dropdown .Select-value {
+    background-color: #ffc107; /* Yellow background */
+    color: #000; /* Black text */
+}
+
+/* Styling for the options in the dropdown list */
+.my-dropdown .VirtualizedSelectOption {
+    color: #3c3c3c; /* Dark gray text */
+}
+
+/* Styling for the focused option in the dropdown list */
+.my-dropdown .VirtualizedSelectFocusedOption {
+    transition: 0.3s;
+    background-color: #ffc107; /* Light yellow background */
+    color: #000; /* Black text */
+}
+.my-dropdown:hover {
+    transition: 0.3s;
+    background-color: #0ddae1; /* Light yellow background */
+    color: #000; /* Black text */
+    user-select: none;
+}
+body{
+    background-color: #efeeee;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
