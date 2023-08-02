@@ -1,100 +1,86 @@
-import pandas as pd
-import plotly.express as px
+import sys
+import os
+from dash.dependencies import Input, Output,State
+
+module_path = os.path.abspath(os.path.join(
+    os.path.dirname(os.path.abspath(__file__))))
+if module_path not in sys.path:
+    sys.path.append(module_path)
+
 import dash
-from dash import dcc
-from dash import html
-from dash.dependencies import Input, Output
+import dash_bootstrap_components as dbc
+from dash import dcc, html, callback
+from components.NavbarVertical import sidebar
+from components.Footer import Footer
+import glob
 
-data_path = 'data/Data_Tables_LGA_Criminal_Incidents_Year_Ending_March_2023.xlsx'
-df = pd.read_excel(data_path, sheet_name = 'Table 01')
-df['LGA'] = df['Local Government Area']
-df['LGA'] = df['LGA'].str.strip()
-df['Incidents_Rate'] = round(df['Rate per 100,000 population'])
-wanted_fields = ['Year', 'LGA', 'Incidents_Rate']
-df = df[wanted_fields]
-df = df.drop_duplicates()
+# # RAW
+ROOT_FOLDER = os.path.abspath(os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), os.pardir))
+ASSETS_FOLDER = os.path.join(ROOT_FOLDER, "assets")
 
-df2 = pd.read_excel(data_path, sheet_name = 'Table 02' )
-df2['LGA'] = df2['Local Government Area']
-df2['LGA'] = df2['LGA'].str.strip()
-df2['Offence_Division'] = df2['Offence_Division'].str.strip()
-df2['LGA_Population'] = 100000 * df2['Incidents_Recorded']/df2['LGA Rate per 100,000 population']
-df2['Division_Incidents'] = df2.groupby(['Year', 'LGA', 'Offence_Division'])['Incidents_Recorded'].transform('sum')
-df2['Division_Incidents_Rate'] = round(100000* df2['Division_Incidents']/df2['LGA_Population'])
-wanted_fields_2 = ['Year', 'LGA', 'Offence_Division', 'Division_Incidents_Rate']
-df2 = df2[wanted_fields_2]
-df2 = df2.drop_duplicates()
+external_style_sheet = glob.glob(os.path.join(ASSETS_FOLDER,
+                                  "css") + "/*.css")
+external_style_sheet += glob.glob(os.path.join(
+    ASSETS_FOLDER, "bootstrap/css") + "/*.css")
+external_style_sheet += glob.glob(os.path.join(ASSETS_FOLDER,
+                                  "fonts") + "/*.css")
 
-# Create the Dash app
-app = dash.Dash(__name__)
+app = dash.Dash(__name__, 
+                title="Victoria Crime Dash",
+                use_pages=True,
+                external_stylesheets=[dbc.themes.BOOTSTRAP] + external_style_sheet,
+                suppress_callback_exceptions=True,
+                )
+color_bg_store = html.Div([dcc.Store(id="color_bg", data="#f8f9fa"),])
+
 server = app.server
 
-# Define the layout of the Dash app
-app.layout = html.Div([
-    html.Meta(
-        name='viewport',
-        content='width=device-width, initial-scale=1.0'
-    ),
-    html.Link(
-        rel='stylesheet',
-        href='styles/custom.css'  # Specify the path to your CSS file
-    ),
-    html.Div([
-        html.H1("Incident Rates by LGA (all offence)"),
-        dcc.Dropdown(
-            className="my-dropdown",
-            id='lga-dropdown',
-            options=[{'label': lga, 'value': lga} for lga in df['LGA'].unique() if lga != "Total"],
-            value=df['LGA'].unique()[0:1],
-            multi=True,
-        ),
-        dcc.Graph(id='lga-incident-graph')
-    ]),
-    html.Div([
-        html.H1("Incident Rates by LGA (offence division breakdown)"),
-        dcc.Dropdown(
-            className = "my-dropdown",
-            id='offence-division-dropdown',
-            options=[{'label': offence, 'value': offence} for offence in df2['Offence_Division'].unique()],
-            value = df2['Offence_Division'].unique()[0],
-        ),
-        dcc.Graph(id='division-incident-graph')
-    ])
-])
+app.layout = html.Div(id='app',className="layout-wrapper layout-content-navbar",
+                      children=[
+                          html.Div(className="layout-container",
+                                   children=[
+                                       dcc.Location(id="url"),
+                                       color_bg_store,
+                                       html.Aside(className="",
+                                                  children=[sidebar]),
+                                       html.Div(className="layout-page",
+                                                children=[
+                                                    html.Div(className="content-wrapper",
+                                                             children=[
+                                                                 html.Div(className="container-xxl flex-grow-1 container-p-y p-0",
+                                                                        #   id="page-content",
+                                                                          children=[dash.page_container,
+                                                                          ]),
+                                                                 html.Footer(className="content-footer footer bg-footer-theme",
+                                                                             children=[
+                                                                                 Footer#,dark_theme_button
+                                                                             ], style={"margin-left": "6rem"})
+                                                             ])
+                                                ])
+                                   ])
+                      ])
 
-# Define the callback function to update the graph based on the dropdown value
+# theme
 @app.callback(
-    Output('lga-incident-graph', 'figure'),
-    Input('lga-dropdown', 'value')
+   [ Output('app', 'style'),
+    Output("color_bg", 'data'),
+    Output('theme-btn', 'src'), 
+    Output('L_tip', 'children'),
+    Output("bg_id", "style")],
+    Input('theme-btn', 'n_clicks')
 )
-def update_graph(selected_lga):
-    filtered_df = df[df['LGA'].isin(selected_lga)]
-    fig = px.line(filtered_df, x='Year', y='Incidents_Rate', color='LGA')
-    fig.update_layout(
-        yaxis_title = "Rate per 100K population",
-        template = "plotly_dark",
-        xaxis_title = "",
-        margin = dict(b=0)
-        )
-    return fig
 
-@app.callback(
-    Output('division-incident-graph', 'figure'),
-    Input('lga-dropdown', 'value'),
-    Input('offence-division-dropdown', 'value')
-)
-def update_graph(selected_lga, selected_division):
-    filtered_df = df2[df2['LGA'].isin(selected_lga)]
-    filtered_df = filtered_df[filtered_df['Offence_Division']==selected_division]
-    fig = px.line(filtered_df, x='Year', y='Division_Incidents_Rate', color='LGA')
-    fig.update_layout(
-        yaxis_title = "Rate per 100K population",
-        template = "plotly_dark",
-        xaxis_title = "",
-        margin = dict(b=0)
-        )
-    return fig
+def toggle_theme(n_clicks):
+    if n_clicks%2:
+        app.css.config.external_stylesheets = [dbc.themes.DARKLY]
+        th = {'background-color': '#222430'}
+        return {'background-color':"#111111" , 'color': '#f7f7f7'} , '#222430',"./assets/images/sun.svg","Light mode", th
+    else:
+        app.css.config.external_stylesheets = [dbc.themes.BOOTSTRAP]
+        th ={'background-color': "#fff"}
+        return {'background-color': '#f5f5f9', 'color': '#222430'},"#fff","./assets/images/moon.svg","Dark mode", th
 
-# Run the Dash app
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     app.run_server(debug=True)
