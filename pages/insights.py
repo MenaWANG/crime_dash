@@ -54,11 +54,11 @@ layout = dbc.Container(
                 dbc.Col([
                     html.H2(
                         "LGA with the Most Increase in Crime (under construction)",
-                        style={"font-weight": "bold","color": "#0084d6"},
+                        style={"font-weight": "bold","color": "#21386E"},
                         className="text-center mb-4",),
                     html.H2(
                         "LGA with the Most Decrease in Crime (under construction)",
-                        style={"font-weight": "bold","color": "#0084d6"},
+                        style={"font-weight": "bold","color": "#21386E"},
                         className="text-center mb-4",),
                     ]
                 ),

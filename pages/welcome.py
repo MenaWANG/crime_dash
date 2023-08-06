@@ -11,7 +11,7 @@ dash.register_page(
     title="Welcome",
     # name="Home",
     # image="metatag-image.png",
-    description="Dash app developed for the Dash Autumn Challenge. The Customer Churn data was used."
+    description="Dash app to explore victorial crime data."
 )
 
 layout = html.Div([
@@ -21,40 +21,39 @@ layout = html.Div([
                 children=[
 
                 html.Div(className="card",
-                children=[
-                    dbc.Row([
-                        dbc.Col(className="col-lg-6", 
-                                children=[  html.Div( className="card-header card-m-0 me-2 pb-3", 
-                                                    children=[
-                                                        html.H2(["Victoria Crime Dashboard"],
-                                                                # className="card-title m-0 me-2 mb-2",
-                                                                style={"font-size": "2vw"}),                         
-                                                        html.Span("stats from crimestatistics.vic.gov.au", 
-                                                                style={"color": "LightSeaGreen", 
-                                                                        "font-size": "1.5vw"}),
-                                                            ]),
-                                            html.Div([
-                                                    html.P("Welcome to victoria crime dashboard!",className="mt-1",),
-                                                    html.P(
-                                                    "Here, we utilize data from Crime Statistics Agency (www.crimestatistics.vic.gov.au) to reveal crime trends cross all LGAs in Victoria, Australia where data is available.",
-                                                    className="mt-1",style={'textAlign': 'justify'}),
-                                                    html.P(
-                                                    ["Learn more about the data from " ,
-                                                    html.A("Crime Statistics Agency", 
-                                                    href="https://www.crimestatistics.vic.gov.au/about-the-data"
-                                                    ,target="_blank"
-                                                    ,style={"color": "LightSeaGreen"}),
-                                                    ], className="mt-1")
-                                                ], 
-                                                    className="me-4 mb-0 mt-4"),
+                    children=[
+                        dbc.Row([
+                            dbc.Col(className="col-lg-6", 
+                                    children=[  html.Div( className="card-header card-m-0 me-2 pb-3", 
+                                                        children=[
+                                                            html.H2(["Victoria Crime Dashboard"],
+                                                                    # className="card-title m-0 me-2 mb-2",
+                                                                    style={"font-size": "2vw"}),                         
+                                                            html.Span("stats from crimestatistics.vic.gov.au", 
+                                                                    style={"color": "LightSeaGreen", 
+                                                                            "font-size": "1.5vw"}),
+                                                                ]),
+                                                html.Div([
+                                                        html.P("Welcome to victoria crime dashboard!",className="mt-1",),
+                                                        html.P(
+                                                        "Here, we utilize data from Crime Statistics Agency (www.crimestatistics.vic.gov.au) to reveal crime trends cross all LGAs in Victoria, Australia where data is available.",
+                                                        className="mt-1",style={'textAlign': 'justify'}),
+                                                        html.P(
+                                                        ["Learn more about the data from " ,
+                                                        html.A("Crime Statistics Agency", 
+                                                        href="https://www.crimestatistics.vic.gov.au/about-the-data"
+                                                        ,
+                                                        target="_blank",
+                                                        ),
+                                                        ], className="mt-1")
+                                                    ], 
+                                                        className="me-4 mb-0 mt-4"),
 
 
                             html.P(["If you have any questions or need assistance, please don't hesitate to reach out to ",
-                                           html.A("Mena Ning Wang", href=LINKEDIN_PROFILE, target="_blank", 
-                                                  style={"color": "LightSeaGreen"})],
+                                           html.A("Mena Ning Wang", href=LINKEDIN_PROFILE, target="_blank",)],
                                      className="me-4 mb-0 mt-4"),
                         ]),
-
                         dbc.Col(
                             className="col-lg-5", 
                             children=[

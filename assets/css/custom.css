@@ -1,10 +1,14 @@
+a {
+  color: #0dacac; /*hyperlink color*/
+}
+
 .sidebar {
     position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
     width: 6rem;
-    padding: 2rem 1rem;
+    padding: 1rem 0.5rem 1rem 0rem;
     /* background-color: #f8f9fa; */
     z-index: 1050;
     transition: width 0.3s ease-in-out;
@@ -12,7 +16,7 @@
   
   /* when the user hovers on the sidebar, expand it */
   .sidebar:hover {
-    width: 16rem;
+    width: 9rem;
   }
   
   /* make sure the contents of the navlink don't wrap when navbar collapses */
@@ -71,8 +75,8 @@
   
   /* position the content relative to the collapsed sidebar */
   .content {
-    margin-left: 7rem;
-    margin-right: 1rem;
+    margin-left: 8rem;
+    margin-right: 5rem;
     padding: 2rem 1rem;
   }
 
@@ -147,10 +151,8 @@
     padding-right: 2rem;
     padding-top: 10rem;
   }
-
-
   .nav-link.active{
-    background-color: #0084d6 !important;
+    background-color: rgba(13, 30, 55, 0.8) !important;
     color: #fff !important;
     box-shadow: 0 2px 4px 0 rgba(32, 121, 255, 0.308) !important;
   }
@@ -186,7 +188,8 @@
       color: black;
   }
   .my-dropdown .VirtualizedSelectOption  {
-      color: rgb(60, 60, 60)
+      color: rgb(60, 60, 60);
+      background-color: rgb(205, 202, 202);
   }
   .my-dropdown .VirtualizedSelectFocusedOption {
       background-color: yellow;

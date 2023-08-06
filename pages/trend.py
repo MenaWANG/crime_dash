@@ -48,7 +48,7 @@ def wrangle_LGA(file):
     df = pd.read_excel(file, sheet_name = 'Table 01')
     df['LGA'] = df['Local Government Area']
     df['LGA'] = df['LGA'].str.strip()
-    df['Incidents_Rate'] = round(df['Rate per 100,000 population'],2)
+    df['Incidents_Rate'] = round(df['Rate per 100,000 population'])
     wanted_fields = ['Year', 'LGA', 'Incidents_Rate']
     df = df[wanted_fields]
     df = df.drop_duplicates()
@@ -67,7 +67,7 @@ layout = dbc.Container(
                 dbc.Col([
                     html.H2(
                         "Crime Trend across LGAs in Victoria",
-                        style={"font-weight": "bold","color": "#0084d6"},
+                        style={"font-weight": "bold","color": "#B1384B"},
                         className="text-center mb-4",
                     ),
                 ]
@@ -80,7 +80,7 @@ layout = dbc.Container(
             [
                 dbc.Col(className="col-md-0 col-lg-1"),
                 dbc.Col(
-                        [html.H1("Incident Rates over Years by LGA"),
+                        [html.H4("Choose LGAs to Explore"),
                          dcc.Dropdown(
                             className="my-dropdown",
                             id='lga-dropdown',

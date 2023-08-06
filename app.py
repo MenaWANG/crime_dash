@@ -2,8 +2,7 @@ import sys
 import os
 from dash.dependencies import Input, Output,State
 
-module_path = os.path.abspath(os.path.join(
-    os.path.dirname(os.path.abspath(__file__))))
+module_path = os.path.dirname(os.path.abspath(__file__))
 if module_path not in sys.path:
     sys.path.append(module_path)
 
@@ -13,18 +12,23 @@ from dash import dcc, html, callback
 from components.NavbarVertical import sidebar
 from components.Footer import Footer
 import glob
+import pathlib
 
 # # RAW
-ROOT_FOLDER = os.path.abspath(os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), os.pardir))
-ASSETS_FOLDER = os.path.join(ROOT_FOLDER, "assets")
+# ROOT_FOLDER = os.path.dirname(os.path.abspath(__file__))
+# ASSETS_FOLDER = os.path.join(ROOT_FOLDER, "assets")
+# external_style_sheet = glob.glob(os.path.join(ASSETS_FOLDER,
+#                                   "css") + "/*.css")
+# external_style_sheet += glob.glob(os.path.join(
+#     ASSETS_FOLDER, "bootstrap/css") + "/*.css")
+# external_style_sheet += glob.glob(os.path.join(ASSETS_FOLDER,
+#                                   "fonts") + "/*.css")
 
-external_style_sheet = glob.glob(os.path.join(ASSETS_FOLDER,
-                                  "css") + "/*.css")
-external_style_sheet += glob.glob(os.path.join(
-    ASSETS_FOLDER, "bootstrap/css") + "/*.css")
-external_style_sheet += glob.glob(os.path.join(ASSETS_FOLDER,
-                                  "fonts") + "/*.css")
+PATH_UP = pathlib.Path(__file__).parent
+ASSETS_PATH = PATH_UP.joinpath("assets").resolve()
+external_style_sheet = list(ASSETS_PATH.glob("css/*.css"))
+external_style_sheet += list(ASSETS_PATH.glob("bootstrap/css/*.css"))
+external_style_sheet += list(ASSETS_PATH.glob("fonts/*.css"))
 
 app = dash.Dash(__name__, 
                 title="Victoria Crime Dash",
